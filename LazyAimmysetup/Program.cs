@@ -14,7 +14,7 @@ namespace LazyAimmysetup
     internal class Program
     {
         static readonly HttpClient client = new HttpClient();
-
+        static public bool Hasadmin = false;
         static async Task Main(string[] args)
         {
            
@@ -34,6 +34,10 @@ namespace LazyAimmysetup
                 Console.WriteLine("You're running Lazy Aimmy without admin privileges you will get UAC prompts");
                 Console.WriteLine("Press enter to continue");
                 Console.ReadLine();
+            }
+            else
+            {
+                Hasadmin = true;
             }
 
             if (Directory.Exists("Aimmy"))
@@ -97,6 +101,7 @@ namespace LazyAimmysetup
             }
             Process.Start(Directory.GetCurrentDirectory() + "\\Aimmy");
             Console.WriteLine("You're all done you should find aimmy inside your current directory");
+            Console.Title = "You're so lazy | Themida | Done";
             Console.ReadLine();
 
         }
@@ -137,47 +142,79 @@ namespace LazyAimmysetup
                 Console.WriteLine("Downloading vc_redist");
                 Filedownloader.DownloadFile("https://aka.ms/vs/17/release/vc_redist.x64.exe", "vc_redist.x64.exe");
                 Processhandeler.StartInfo.FileName = "vc_redist.x64.exe";
-                if (CheckRights())
+                if (Hasadmin)
                 {
-                    Console.WriteLine("starting vc_redist setup");
+                    Console.Write("starting vc_redist setup");
                 }
                 else
                 {
-                    Console.WriteLine("starting vc_redist setup, Since you are not running as admin you need to press Yes on the UAC prompt");
+                    Console.Write("starting vc_redist setup, Since you are not running as admin you need to press Yes on the UAC prompt");
                 }
                 Processhandeler.Start();
                 Processhandeler.WaitForExit();
-
+                if (Processhandeler.ExitCode == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(" | Installer returned Success\n");
+                }
+                else if (Processhandeler.ExitCode == 1)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(" | Installer returned Failure\n");
+                }
+                Console.ResetColor();
                 Console.WriteLine("vc_redist setup finished");
                 Console.WriteLine("Downloading dotnet 7.0.17");
                 Filedownloader.DownloadFile("https://download.visualstudio.microsoft.com/download/pr/e35dac95-2855-44f9-b6c9-dda018d922ba/fcc2416e232942d81435a659024bd4e5/dotnet-runtime-7.0.17-win-x64.exe", "dotnet7.exe");
                 Processhandeler.StartInfo.FileName = "dotnet7.exe";
-                if (CheckRights())
+                if (Hasadmin)
                 {
-                    Console.WriteLine("Starting dotnet 7 setup");
+                    Console.Write("Starting dotnet 7 setup");
                 }
                 else
                 {
-                    Console.WriteLine("starting dotnet8 setup, Since you are not running as admin you need to press Yes on the UAC prompt");
+                    Console.Write("starting dotnet8 setup, Since you are not running as admin you need to press Yes on the UAC prompt");
                 }
 
                 Processhandeler.Start();
                 Processhandeler.WaitForExit();
+                if (Processhandeler.ExitCode == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(" | Installer returned Success\n");
+                }
+                else if (Processhandeler.ExitCode == 1)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(" | Installer returned Failure\n");
+                }
+                Console.ResetColor();
                 Console.WriteLine("vc_redist setup finished");
                 Console.WriteLine("Downloading dotnet8");
                 Filedownloader.DownloadFile("https://download.visualstudio.microsoft.com/download/pr/84ba33d4-4407-4572-9bfa-414d26e7c67c/bb81f8c9e6c9ee1ca547396f6e71b65f/windowsdesktop-runtime-8.0.2-win-x64.exe", "dotnet8.exe");
                 Processhandeler.StartInfo.FileName = "dotnet8.exe";
-                if (CheckRights())
+                if (Hasadmin)
                 {
-                    Console.WriteLine("Starting dotnet8 setup");
+                    Console.Write("Starting dotnet8 setup");
                 }
                 else
                 {
-                    Console.WriteLine("starting dotnet8 setup, Since you are not running as admin you need to press Yes on the UAC prompt");
+                    Console.Write("starting dotnet8 setup, Since you are not running as admin you need to press Yes on the UAC prompt");
                 }
 
                 Processhandeler.Start();
                 Processhandeler.WaitForExit();
+                if (Processhandeler.ExitCode == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(" | Installer returned Success\n");
+                }
+                else if (Processhandeler.ExitCode == 1)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(" | Installer returned Failure\n");
+                }
+                Console.ResetColor();
                 Console.WriteLine("dotnet8 setup finished");
                 Console.WriteLine("Cleaning up");
                 try
